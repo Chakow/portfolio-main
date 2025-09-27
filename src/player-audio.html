@@ -1,0 +1,24 @@
+<div class="player">
+  <!-- <div class="player-header">
+    <div class="player-track-title">{{ tracktitle }}</div>
+    <div class="player-track-artist">{{ artistname }}</div>
+  </div> -->
+
+  <div class="player-progress">
+    <div class="player-time current">0:00</div>
+    <div class="player-progress-bar">
+      <div class="player-progress-inner"></div>
+    </div>
+  </div>
+  <div class="player-controls">
+    <div class="player-button play">
+      <img src="img/play.svg" alt="Play" class="play-button" />
+    </div>
+
+    <div class="player-button pause">
+      <img src="img/pause.svg" alt="Pause" />
+    </div>
+  </div>
+
+  <audio id="audio" src="{{ audiosource }}"></audio>
+</div>

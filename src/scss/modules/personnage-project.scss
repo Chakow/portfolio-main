@@ -1,0 +1,27 @@
+.personnage-project {
+  transform: translateX(30%);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 9%;
+
+  transition: 0.3s;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  .exclamation {
+    width: 40%;
+    position: fixed;
+    transform: translateY(40%) translateX(25%);
+    z-index: -1;
+    transition: 0.2s;
+    opacity: 0;
+  }
+}
+.personnage-project:hover {
+  transform: translateX(10%);
+  .exclamation {
+    transform: translateY(-100%) translateX(25%);
+    opacity: 1;
+  }
+}

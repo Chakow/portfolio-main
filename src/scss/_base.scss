@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+body {
+  background: $gris-fonce;
+  background: url("../img/texture-grain-project.png"), #101010;
+  background-size: cover;
+}
+h1,
+h2,
+p,
+ul,
+li,
+div,
+a {
+  color: $blanc;
+  font-family: "DM Sans";
+  font-weight: 400;
+}

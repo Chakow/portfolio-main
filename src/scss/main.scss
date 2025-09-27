@@ -1,0 +1,20 @@
+$gris-fonce: #101010;
+$beige-moitie: #fff0b880;
+$beige: #fff0b8;
+$noir: #000000;
+$gris: #282621;
+$jaune-fade: #40350d;
+$jaune: #f4c100;
+$blanc: #fff9e3;
+
+@import "bootstrap/scss/bootstrap-grid";
+@import "font";
+@import "base";
+@import "layout";
+@import "modules/menu";
+@import "modules/project.scss";
+@import "modules/player-audio.scss";
+@import "modules/welcome.scss";
+@import "modules/ajax.scss";
+@import "modules/personnage-project.scss";
+@import "modules/choose-your-project.scss";
