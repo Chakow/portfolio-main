@@ -13,7 +13,7 @@
     />
   </head>
   <body>
-    <div class="welcome">
+    <!-- <div class="welcome">
       <img
         src="img/charlot-kolly-accueil.png"
         alt="Charlot Kolly"
@@ -43,8 +43,19 @@
             <div class="separator-welcome"></div></div
         ></a>
       </div>
-    </div>
-    <div class="ajax"></div>
+    </div> -->
+    <extends src="layout.html">
+      <block name="content">
+        <img src="img/personnage-accueil.png" class="personnage-accueil" />
+        <extends src="menu.html"></extends>
+        <img
+          src="img/choose-your-project.png"
+          alt="choisis ton projet"
+          class="choose-your-project"
+        />
+      </block>
+    </extends>
+
     <script src="js/main.js" type="module"></script>
   </body>
 </html>

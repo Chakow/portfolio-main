@@ -88,79 +88,11 @@ categories.forEach((category) => {
   });
 });
 
-//page interactive accueil
-
-document.querySelectorAll(".menu-welcome a").forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    const page = this.getAttribute("href");
-    const xhttp = new XMLHttpRequest();
-
-    xhttp.onload = function () {
-      console.log(this.responseText);
-      var container = document.querySelector(".ajax");
-      container.innerHTML = this.responseText;
-    };
-
-    xhttp.open("GET", page, true);
-    xhttp.send();
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const triggers = document.querySelectorAll(".menu-title-welcome");
-  const welcome = document.querySelector(".welcome");
-  const welcomeChildren = document.querySelectorAll(".welcome > *");
-
-  triggers.forEach(function (trigger) {
-    trigger.addEventListener("click", function () {
-      welcomeChildren.forEach(function (child) {
-        child.classList.add("menu-title-welcome-click");
-      });
-
-      setTimeout(function () {
-        welcome.style.opacity = "0";
-
-        setTimeout(function () {
-          welcome.style.display = "none";
-        }, 180);
-      }, 120);
-    });
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const triggers = document.querySelectorAll(".menu-title-welcome");
-  const ajax = document.querySelector(".ajax");
-
-  triggers.forEach(function (trigger) {
-    trigger.addEventListener("click", function () {
-      ajax.classList.add("ajax-active");
-    });
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const triggers = document.querySelectorAll(".menu-title-welcome");
-  const ajax = document.querySelector(".ajax");
-
-  triggers.forEach(function (trigger) {
-    trigger.addEventListener("click", function () {
-      ajax.classList.add("ajax-active");
-
-      setTimeout(function () {
-        ajax.style.opacity = "1";
-      }, 180);
-    });
-  });
-});
-
 //agrandissement image
 
 const modal = document.getElementById("image-modal");
 const modalImg = document.getElementById("modal-img");
-const closeBtn = document.querySelector(".close");
+// const closeButton = document.querySelector(".close-image");
 
 document.querySelectorAll(".project-image").forEach((img) => {
   img.addEventListener("click", () => {
@@ -169,12 +101,142 @@ document.querySelectorAll(".project-image").forEach((img) => {
   });
 });
 
-closeBtn.onclick = () => {
-  modal.style.display = "none";
-};
+// closeButton.onclick = () => {
+//   modal.style.display = "none";
+// };
 
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 };
+//ANIMATION ACCUEIL
+
+// script.js
+// Fonctionne même si la page est fixe (overflow:hidden).
+// On capte wheel / touchmove / clavier et on mappe sur --tx / --ty.
+
+const els = document.querySelectorAll(".personnage-accueil");
+
+if (!els.length) {
+  console.warn("Aucun élément .personnage-accueil trouvé.");
+}
+
+// params à ajuster selon l'effet souhaité
+let virtualScroll = 0; // valeur accumulée (0..maxScroll)
+let maxScroll = window.innerHeight * 1.0; // distance "virtuelle" pour atteindre 100% (modifiable)
+let maxOffsetFactor = 0.6; // fraction de la largeur/hauteur utilisée pour le déplacement
+let wheelSpeed = 1.0; // sensibilité molette (augmente pour réactions plus fortes)
+let touchSpeed = 1.0; // sensibilité touch
+let ticking = false;
+
+// helper
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+// détermine la direction X/Y en lisant la classe ou data-direction
+function getDirection(el) {
+  const dir =
+    el.dataset.direction ||
+    Array.from(el.classList).find((c) =>
+      /^(top|bottom)-(left|right)$/.test(c)
+    ) ||
+    "top-left";
+  // dir format : "top-left" etc
+  const [vert, horiz] = dir.split("-"); // ex ["top","left"]
+  const dirX = horiz === "right" ? 1 : -1;
+  const dirY = vert === "bottom" ? 1 : -1;
+  return { dirX, dirY };
+}
+
+function updateTransforms() {
+  ticking = false;
+  const progress = clamp(virtualScroll / maxScroll, 0, 1); // 0..1
+  const maxOffsetX = window.innerWidth * maxOffsetFactor;
+  const maxOffsetY = window.innerHeight * maxOffsetFactor;
+
+  els.forEach((el) => {
+    const { dirX, dirY } = getDirection(el);
+    const tx = dirX * progress * maxOffsetX; // px
+    const ty = dirY * progress * maxOffsetY; // px
+    el.style.setProperty("--tx", `${tx}px`);
+    el.style.setProperty("--ty", `${ty}px`);
+  });
+}
+
+// schedule update via rAF pour perf
+function scheduleUpdate() {
+  if (!ticking) {
+    ticking = true;
+    requestAnimationFrame(updateTransforms);
+  }
+}
+
+/* ----------------- capture wheel ----------------- */
+// use passive:false so we can preventDefault if needed (we use overflow:hidden so not strictly necessary)
+window.addEventListener(
+  "wheel",
+  (e) => {
+    // e.preventDefault(); // pas nécessaire si overflow:hidden, mais tu peux décommenter si tu veux bloquer tout comportement par défaut
+    const delta = e.deltaY; // positif quand on "descend"
+    virtualScroll += delta * wheelSpeed;
+    virtualScroll = clamp(virtualScroll, 0, maxScroll);
+    scheduleUpdate();
+  },
+  { passive: false }
+);
+
+/* ----------------- capture touch (mobile) ----------------- */
+let lastTouchY = null;
+
+window.addEventListener(
+  "touchstart",
+  (e) => {
+    if (e.touches.length === 1) lastTouchY = e.touches[0].clientY;
+  },
+  { passive: true }
+);
+
+window.addEventListener(
+  "touchmove",
+  (e) => {
+    if (!lastTouchY) return;
+    const y = e.touches[0].clientY;
+    const dy = lastTouchY - y; // si on glisse vers le haut, dy > 0 → on "descend" virtuellement
+    lastTouchY = y;
+    // e.preventDefault(); // si tu veux empêcher le comportement natif (bouncing), décommente et set passive:false plus haut
+    virtualScroll += dy * touchSpeed;
+    virtualScroll = clamp(virtualScroll, 0, maxScroll);
+    scheduleUpdate();
+  },
+  { passive: false }
+);
+
+window.addEventListener(
+  "touchend",
+  () => {
+    lastTouchY = null;
+  },
+  { passive: true }
+);
+
+/* ----------------- clavier (optionnel) ----------------- */
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowDown") {
+    virtualScroll += 50;
+    virtualScroll = clamp(virtualScroll, 0, maxScroll);
+    scheduleUpdate();
+  } else if (e.key === "ArrowUp") {
+    virtualScroll -= 50;
+    virtualScroll = clamp(virtualScroll, 0, maxScroll);
+    scheduleUpdate();
+  }
+});
+
+/* ----------------- resize → recalc les contraintes ----------------- */
+window.addEventListener("resize", () => {
+  maxScroll = window.innerHeight * 1.0; // tu peux changer le multiplicateur
+  scheduleUpdate();
+});
+
+// init (si la page n'est pas au top)
+updateTransforms();
