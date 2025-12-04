@@ -28,6 +28,7 @@
     flex: 1;
     padding-right: 10px;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -59,7 +60,7 @@
     }
     .category {
       display: flex;
-      width: 300px;
+      width: 100%;
       flex-direction: column;
       align-items: flex-start;
       gap: 27px;
@@ -139,5 +140,13 @@
   .about:hover,
   .contact:hover {
     opacity: 1;
+  }
+}
+@media (max-width: 1080px) {
+  .navigation {
+    width: 300px;
+    .project-date-menu {
+      display: none;
+    }
   }
 }
