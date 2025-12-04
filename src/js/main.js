@@ -475,3 +475,11 @@ list.addEventListener("pointerenter", () => {
 list.addEventListener("pointerleave", () => {
   enableScrollTriggers();
 });
+
+// BURGER MENU
+const burger = document.querySelector(".burger-menu");
+const navigation = document.querySelector(".navigation");
+
+burger.addEventListener("click", () => {
+  navigation.classList.toggle("is-active");
+});

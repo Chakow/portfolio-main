@@ -3,6 +3,7 @@
   height: 100vh;
   width: 370px;
   display: flex;
+  z-index: 1;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
@@ -157,6 +158,11 @@
 }
 @media (max-width: 767px) {
   .navigation {
+    transition: 0.3s;
+    width: 100%;
     transform: translateX(-100%);
+  }
+  .navigation.is-active {
+    transform: translateX(0%);
   }
 }
