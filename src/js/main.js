@@ -1,3 +1,17 @@
+// //ANIMATION LOADING IMAGE
+// const el = document.querySelector(".loading-image");
+
+// let angle = 0;
+// let vitesse = 3;
+
+// function tourner() {
+//   angle = (angle + vitesse) % 360;
+//   el.style.transform = `rotate(${angle}deg)`;
+//   requestAnimationFrame(tourner);
+// }
+
+// tourner();
+
 const player = document.querySelector(".player");
 if (player) {
   const audio = document.getElementById("audio");
@@ -92,7 +106,6 @@ categories.forEach((category) => {
 
 const modal = document.getElementById("image-modal");
 const modalImg = document.getElementById("modal-img");
-// const closeButton = document.querySelector(".close-image");
 
 document.querySelectorAll(".project-image").forEach((img) => {
   img.addEventListener("click", () => {
@@ -112,131 +125,353 @@ window.onclick = function (event) {
 };
 //ANIMATION ACCUEIL
 
-// script.js
-// Fonctionne même si la page est fixe (overflow:hidden).
-// On capte wheel / touchmove / clavier et on mappe sur --tx / --ty.
+//ANIMATION PERSO ACCUEIL
+document.addEventListener("DOMContentLoaded", () => {
+  const personnage = document.querySelector(".home-personnage");
+  const container = document.querySelector(".welcome");
 
-const els = document.querySelectorAll(".personnage-accueil");
+  let progress = 0;
+  let targetProgress = 0;
 
-if (!els.length) {
-  console.warn("Aucun élément .personnage-accueil trouvé.");
-}
+  const distancePercent = 30; // le personnage se déplace sur 80% de la largeur de l'écran
 
-// params à ajuster selon l'effet souhaité
-let virtualScroll = 0; // valeur accumulée (0..maxScroll)
-let maxScroll = window.innerHeight * 1.0; // distance "virtuelle" pour atteindre 100% (modifiable)
-let maxOffsetFactor = 0.6; // fraction de la largeur/hauteur utilisée pour le déplacement
-let wheelSpeed = 1.0; // sensibilité molette (augmente pour réactions plus fortes)
-let touchSpeed = 1.0; // sensibilité touch
-let ticking = false;
+  // écoute la molette
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
 
-// helper
-const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+      const sensitivity = 1300;
+      targetProgress += e.deltaY / sensitivity;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
+    },
+    { passive: true }
+  );
 
-// détermine la direction X/Y en lisant la classe ou data-direction
-function getDirection(el) {
-  const dir =
-    el.dataset.direction ||
-    Array.from(el.classList).find((c) =>
-      /^(top|bottom)-(left|right)$/.test(c)
-    ) ||
-    "top-left";
-  // dir format : "top-left" etc
-  const [vert, horiz] = dir.split("-"); // ex ["top","left"]
-  const dirX = horiz === "right" ? 1 : -1;
-  const dirY = vert === "bottom" ? 1 : -1;
-  return { dirX, dirY };
-}
+  function tick() {
+    // mise à jour de progress
+    progress += (targetProgress - progress) * 0.1;
 
-function updateTransforms() {
-  ticking = false;
-  const progress = clamp(virtualScroll / maxScroll, 0, 1); // 0..1
-  const maxOffsetX = window.innerWidth * maxOffsetFactor;
-  const maxOffsetY = window.innerHeight * maxOffsetFactor;
+    // calcule la distance réelle en pixels
+    const distancePx = (distancePercent / 100) * window.innerWidth;
 
-  els.forEach((el) => {
-    const { dirX, dirY } = getDirection(el);
-    const tx = dirX * progress * maxOffsetX; // px
-    const ty = dirY * progress * maxOffsetY; // px
-    el.style.setProperty("--tx", `${tx}px`);
-    el.style.setProperty("--ty", `${ty}px`);
+    // applique le mouvement
+    gsap.set(personnage, { y: distancePx * progress });
+
+    // disparition / réapparition
+    if (progress >= 0.99) personnage.style.display = "none";
+    else if (personnage.style.display === "none") personnage.style.display = "";
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
+
+//ANIMATION PORTFOLIO ACCUEIL
+document.addEventListener("DOMContentLoaded", () => {
+  const portfolioText = document.querySelector(".portfolio-text");
+  const container = document.querySelector(".welcome");
+
+  let progress = 0;
+  let targetProgress = 0;
+
+  const distancePercent = -30; // le personnage se déplace sur 80% de la largeur de l'écran
+
+  // écoute la molette
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 1300;
+      targetProgress += e.deltaY / sensitivity;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
+    },
+    { passive: true }
+  );
+
+  function tick() {
+    // mise à jour de progress
+    progress += (targetProgress - progress) * 0.1;
+
+    // calcule la distance réelle en pixels
+    const distancePx = (distancePercent / 100) * window.innerWidth;
+
+    // applique le mouvement
+    gsap.set(portfolioText, { y: distancePx * progress });
+
+    // disparition / réapparition
+    if (progress >= 0.99) portfolioText.style.display = "none";
+    else if (portfolioText.style.display === "none")
+      portfolioText.style.display = "";
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
+
+//ANIMATION LOGO ACCUEIL
+document.addEventListener("DOMContentLoaded", () => {
+  const logo = document.querySelector(".logo");
+  const container = document.querySelector(".welcome");
+
+  let progress = 0;
+  let targetProgress = 0;
+
+  const distancePercent = 30; // le personnage se déplace sur 80% de la largeur de l'écran
+
+  // écoute la molette
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 1300;
+      targetProgress += e.deltaY / sensitivity;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
+    },
+    { passive: true }
+  );
+
+  function tick() {
+    // mise à jour de progress
+    progress += (targetProgress - progress) * 0.1;
+
+    // calcule la distance réelle en pixels
+    const distancePx = (distancePercent / 100) * window.innerWidth;
+
+    // applique le mouvement
+    gsap.set(logo, { x: distancePx * progress });
+
+    // disparition / réapparition
+    if (progress >= 0.99) logo.style.display = "none";
+    else if (logo.style.display === "none") logo.style.display = "";
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
+
+//ANIMATION CHARLOT KOLLY ACCUEIL
+document.addEventListener("DOMContentLoaded", () => {
+  const homeCharlotKolly = document.querySelector(".home-charlot-kolly");
+  const container = document.querySelector(".welcome");
+
+  let progress = 0;
+  let targetProgress = 0;
+
+  const distancePercent = -40; // le personnage se déplace sur 80% de la largeur de l'écran
+
+  // écoute la molette
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 1300;
+      targetProgress += e.deltaY / sensitivity;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
+    },
+    { passive: true }
+  );
+
+  function tick() {
+    // mise à jour de progress
+    progress += (targetProgress - progress) * 0.1;
+
+    // calcule la distance réelle en pixels
+    const distancePx = (distancePercent / 100) * window.innerWidth;
+
+    // applique le mouvement
+    gsap.set(homeCharlotKolly, { x: distancePx * progress });
+
+    // disparition / réapparition
+    if (progress >= 0.99) homeCharlotKolly.style.display = "none";
+    else if (homeCharlotKolly.style.display === "none")
+      homeCharlotKolly.style.display = "";
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
+//ANIMATION LIGHT AND LAMP
+//TRANSLATE
+document.addEventListener("DOMContentLoaded", () => {
+  const lamp = document.querySelector(".light-and-lamp");
+  const container = document.querySelector(".welcome");
+
+  let progress = 0;
+  let targetProgress = 0;
+
+  // Valeurs séparées
+  const moveTopPercent = 7; // ex: -8% sur l'axe Y
+  const moveRightPercent = 5; // ex: -12% sur l'axe X
+
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 400;
+      targetProgress += e.deltaY / sensitivity;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
+    },
+    { passive: true }
+  );
+
+  function tick() {
+    progress += (targetProgress - progress) * 0.1;
+
+    lamp.style.top = `${-moveTopPercent * progress}%`;
+    lamp.style.right = `${-moveRightPercent * progress}%`;
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
+//ROTATE LAMP
+
+document.addEventListener("DOMContentLoaded", () => {
+  const lamp = document.querySelector(".home-lamp");
+  const container = document.querySelector(".welcome");
+
+  let progressLamp = 0; // valeur actuelle
+  let targetProgressLamp = 0; // valeur cible
+
+  const rotateAngle = 13; // angle final en degrés
+
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 400; // ajuste la vitesse
+      targetProgressLamp += e.deltaY / sensitivity;
+      targetProgressLamp = Math.max(0, Math.min(1, targetProgressLamp));
+    },
+    { passive: true }
+  );
+
+  function tickLamp() {
+    // interpolation douce
+    progressLamp += (targetProgressLamp - progressLamp) * 0.1;
+
+    // applique la rotation
+    gsap.set(lamp, { rotate: rotateAngle * progressLamp });
+
+    // disparition/réapparition si tu veux
+    // if (progressLamp >= 1) lamp.style.display = "none";
+    // else if (lamp.style.display === "none") lamp.style.display = "";
+
+    requestAnimationFrame(tickLamp);
+  }
+
+  tickLamp();
+});
+
+//ROTATE LIGHT
+document.addEventListener("DOMContentLoaded", () => {
+  const light = document.querySelector(".home-light");
+  const container = document.querySelector(".welcome");
+
+  let progressLight = 0; // valeur actuelle
+  let targetProgressLight = 0; // valeur cible
+
+  const rotateAngle = 13; // angle final en degrés
+
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 400; // ajuste la vitesse
+      targetProgressLight += e.deltaY / sensitivity;
+      targetProgressLight = Math.max(0, Math.min(1, targetProgressLight));
+    },
+    { passive: true }
+  );
+
+  function tickLight() {
+    // interpolation douce
+    progressLight += (targetProgressLight - progressLight) * 0.1;
+
+    // applique la rotation
+    gsap.set(light, { rotate: rotateAngle * progressLight });
+
+    // disparition/réapparition si tu veux
+    // if (progressLamp >= 1) lamp.style.display = "none";
+    // else if (lamp.style.display === "none") lamp.style.display = "";
+
+    requestAnimationFrame(tickLight);
+  }
+
+  tickLight();
+});
+//OPACITE QUI DISPARRAIT ACCUEIL FOND
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".welcome");
+
+  const cover = document.querySelector(".cover-home-image");
+  const grain = document.querySelector(".texture-grain");
+  const black = document.querySelector(".black-fill");
+
+  let progress = 0;
+  let targetProgress = 0;
+
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 400; // augmente pour rendre le scroll moins sensible
+      targetProgress += e.deltaY / sensitivity;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
+    },
+    { passive: true }
+  );
+
+  function tick() {
+    // interpolation fluide
+    progress += (targetProgress - progress) * 0.1;
+
+    // opacité qui va de 1 à 0 selon le scroll
+    const opacity = 1 - progress;
+
+    cover.style.opacity = opacity;
+    grain.style.opacity = opacity;
+    black.style.opacity = opacity;
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
+//EMPECHER LA PAGE DE SCROLLER QUAND ON EST SUR PROJECTS LIST
+const list = document.querySelector(".projects-list");
+
+// désactive tous les ScrollTriggers
+function disableScrollTriggers() {
+  gsap.utils.toArray(ScrollTrigger.getAll()).forEach((trigger) => {
+    trigger.disable(false); // false = ne pas réinitialiser
   });
 }
 
-// schedule update via rAF pour perf
-function scheduleUpdate() {
-  if (!ticking) {
-    ticking = true;
-    requestAnimationFrame(updateTransforms);
-  }
+// réactive tous les ScrollTriggers
+function enableScrollTriggers() {
+  gsap.utils.toArray(ScrollTrigger.getAll()).forEach((trigger) => {
+    trigger.enable(false);
+  });
 }
 
-/* ----------------- capture wheel ----------------- */
-// use passive:false so we can preventDefault if needed (we use overflow:hidden so not strictly necessary)
-window.addEventListener(
-  "wheel",
-  (e) => {
-    // e.preventDefault(); // pas nécessaire si overflow:hidden, mais tu peux décommenter si tu veux bloquer tout comportement par défaut
-    const delta = e.deltaY; // positif quand on "descend"
-    virtualScroll += delta * wheelSpeed;
-    virtualScroll = clamp(virtualScroll, 0, maxScroll);
-    scheduleUpdate();
-  },
-  { passive: false }
-);
-
-/* ----------------- capture touch (mobile) ----------------- */
-let lastTouchY = null;
-
-window.addEventListener(
-  "touchstart",
-  (e) => {
-    if (e.touches.length === 1) lastTouchY = e.touches[0].clientY;
-  },
-  { passive: true }
-);
-
-window.addEventListener(
-  "touchmove",
-  (e) => {
-    if (!lastTouchY) return;
-    const y = e.touches[0].clientY;
-    const dy = lastTouchY - y; // si on glisse vers le haut, dy > 0 → on "descend" virtuellement
-    lastTouchY = y;
-    // e.preventDefault(); // si tu veux empêcher le comportement natif (bouncing), décommente et set passive:false plus haut
-    virtualScroll += dy * touchSpeed;
-    virtualScroll = clamp(virtualScroll, 0, maxScroll);
-    scheduleUpdate();
-  },
-  { passive: false }
-);
-
-window.addEventListener(
-  "touchend",
-  () => {
-    lastTouchY = null;
-  },
-  { passive: true }
-);
-
-/* ----------------- clavier (optionnel) ----------------- */
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowDown") {
-    virtualScroll += 50;
-    virtualScroll = clamp(virtualScroll, 0, maxScroll);
-    scheduleUpdate();
-  } else if (e.key === "ArrowUp") {
-    virtualScroll -= 50;
-    virtualScroll = clamp(virtualScroll, 0, maxScroll);
-    scheduleUpdate();
-  }
+list.addEventListener("pointerenter", () => {
+  disableScrollTriggers();
 });
 
-/* ----------------- resize → recalc les contraintes ----------------- */
-window.addEventListener("resize", () => {
-  maxScroll = window.innerHeight * 1.0; // tu peux changer le multiplicateur
-  scheduleUpdate();
+list.addEventListener("pointerleave", () => {
+  enableScrollTriggers();
 });
-
-// init (si la page n'est pas au top)
-updateTransforms();

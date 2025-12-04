@@ -13,48 +13,54 @@
     />
   </head>
   <body>
-    <!-- <div class="welcome">
-      <img
-        src="img/charlot-kolly-accueil.png"
-        alt="Charlot Kolly"
-        class="welcome-name"
-      />
-      <img
-        src="img/personnage-accueil.png"
-        alt="personnage"
-        class="welcome-personnage"
-      />
-      <img src="img/portfolio-accueil.png" alt="" class="welcome-portfolio" />
-      <img src="img/texture-grain-project.png" alt="" class="texture-grain" />
-      <div class="menu-welcome">
-        <a href="choose-your-project.html"
-          ><div class="menu-title-welcome">
-            <img src="img/projet-titre.svg" alt="projets" />
-            <div class="separator-welcome"></div></div
-        ></a>
-        <a href="contact.html"
-          ><div class="menu-title-welcome">
-            <img src="img/contact-titre.svg" alt="contact" />
-            <div class="separator-welcome"></div></div
-        ></a>
-        <a href="a-propos.html"
-          ><div class="menu-title-welcome">
-            <img src="img/a-propos-titre.svg" alt="à prospos" />
-            <div class="separator-welcome"></div></div
-        ></a>
-      </div>
+    <!-- <div class="loading-page">
+      <img src="img/loading-image.png" class="loading-image" />
     </div> -->
-    <extends src="layout.html">
-      <block name="content">
-        <extends src="menu.html"></extends>
+    <div class="welcome">
+      <div class="welcome-accueil">
         <img
-          src="img/choose-your-project.png"
-          alt="choisis ton projet"
-          class="choose-your-project"
+          src="img/portfolio-accueil.png?as=webp"
+          class="portfolio-text"
+          alt="portfolio"
         />
-      </block>
-    </extends>
+        <img
+          src="img/personnage-accueil.png?as=webp"
+          class="home-personnage"
+          alt="personnage"
+        />
+        <img
+          src="img/charlot-kolly-accueil.png?as=webp"
+          class="home-charlot-kolly"
+          alt="Charlot Kolly"
+        />
+        <div class="light-and-lamp">
+          <img src="img/lumiere.png?as=webp" class="home-light" />
+          <img src="img/lampe-accueil.png?as=webp" class="home-lamp" />
+        </div>
+        <img src="img/logo.png?as=webp" class="logo" />
+        <img src="img/texture-grain.png?as=webp" class="texture-grain" />
+        <div class="black-fill"></div>
+        <img
+          src="img/background-texture.png?as=webp"
+          class="cover-home-image"
+        />
+      </div>
 
+      <div class="first-interaction">
+        <extends src="layout.html">
+          <block name="content">
+            <extends src="menu.html"></extends>
+            <img
+              src="img/choose-your-project.png?as=webp"
+              alt="choisis ton projet"
+              class="choose-your-project"
+            />
+          </block>
+        </extends>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="js/main.js" type="module"></script>
   </body>
 </html>

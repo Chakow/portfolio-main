@@ -1,9 +1,38 @@
 <extends src="layout.html">
   <block name="content">
     <extends src="menu.html"></extends>
-    <extends
-      src="project-audio.html"
-      locals='{"title":"flutio", "date":"2024", "text":"Ceci est une description plus ou moins complète du projet actuel.", "image":"img/photo-projet/cover_projet.png", "time":"1:58"}'
-    ></extends>
+    <div class="project">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-3 offset-md-4">
+            <div class="project-descrition">
+              <div class="project-title">
+                <h1>flutio</h1>
+                <div class="project-description-separator"></div>
+              </div>
+              <div class="project-date">
+                <h2>2025</h2>
+                <div class="project-description-separator"></div>
+              </div>
+              <div class="project-text">
+                <p>Flutio est un son qui fait boum boum</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="player-audio">
+              <iframe
+                src="https://www.youtube.com/embed/NAc6yh0e734?si=fJ8JE0eZKtE5o9EA"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </block>
 </extends>

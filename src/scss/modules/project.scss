@@ -41,7 +41,7 @@
     }
     p {
       color: var(--beige, #fff0b8);
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 250;
       align-self: stretch;
       opacity: 0.5;
@@ -86,5 +86,18 @@
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+  }
+  .player-audio {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 12px; /* optionnel, pour un look clean */
+  }
+
+  .player-audio iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
   }
 }
