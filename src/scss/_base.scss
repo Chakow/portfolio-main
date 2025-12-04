@@ -15,7 +15,7 @@ video {
 }
 body {
   background: $gris-fonce;
-  background: url("../img/texture-grain-project.png"), #101010;
+  background: url("../img/texture-grain-project.png?as=webp"), #101010;
   background-size: cover;
   overflow: hidden;
 }
