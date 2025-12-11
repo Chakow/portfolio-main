@@ -1,0 +1,25 @@
+.burger-menu .is-not-active {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute; /* IMPORTANT pour que les deux images se superposent */
+}
+
+.burger-menu {
+  position: fixed;
+  z-index: 2;
+  top: 30px;
+  right: 10px;
+  height: 40px;
+  display: flex;
+  padding-right: 20px;
+  justify-content: flex-end;
+  display: none;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .burger-menu {
+    display: flex;
+    position: relative;
+  }
+}

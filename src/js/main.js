@@ -72,35 +72,44 @@ import shuffleLetters from "shuffle-letters";
 
 var categories = document.querySelectorAll(".category-project");
 
+// Désactive l'effet sous 767px
+const allowShuffle = window.innerWidth >= 767;
+
 categories.forEach((category) => {
   let isAnimating = false;
   let canAnimate = true;
 
   category.addEventListener("mouseenter", () => {
+    if (!allowShuffle) return; // ← blocage mobile/tablette
+
     if (!isAnimating && canAnimate) {
       isAnimating = true;
       canAnimate = false;
 
-      let projectName = category.querySelector(".project-name"); // Sélectionne uniquement .project-name
+      let projectName = category.querySelector(".project-name");
       if (projectName) {
         shuffleLetters(projectName, {
-          iterations: 4, // Nombre de fois que les lettres changent
-          fps: 40, // Fluidité de l'animation
+          iterations: 4,
+          fps: 40,
         });
       }
 
       setTimeout(() => {
         isAnimating = false;
-      }, 800); // Durée de l'animation
+      }, 800);
     }
   });
 
   category.addEventListener("mouseleave", () => {
+    if (!allowShuffle) return; // ← inutile de gérer le reset
     setTimeout(() => {
       canAnimate = true;
-    }, 100); // Délai avant de rejouer
+    }, 100);
   });
 });
+
+// const media = window.matchMedia("(min-width: 767px)");
+// const allowShuffle = () => media.matches;
 
 //agrandissement image
 
@@ -482,4 +491,11 @@ const navigation = document.querySelector(".navigation");
 
 burger.addEventListener("click", () => {
   navigation.classList.toggle("is-active");
+});
+
+const [openIcon, closeIcon] = burger.querySelectorAll("img");
+
+burger.addEventListener("click", () => {
+  openIcon.classList.toggle("is-not-active");
+  closeIcon.classList.toggle("is-not-active");
 });
