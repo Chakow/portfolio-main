@@ -1,71 +1,3 @@
-// //ANIMATION LOADING IMAGE
-// const el = document.querySelector(".loading-image");
-
-// let angle = 0;
-// let vitesse = 3;
-
-// function tourner() {
-//   angle = (angle + vitesse) % 360;
-//   el.style.transform = `rotate(${angle}deg)`;
-//   requestAnimationFrame(tourner);
-// }
-
-// tourner();
-
-const player = document.querySelector(".player");
-if (player) {
-  const audio = document.getElementById("audio");
-  const playButton = player.querySelector(".play");
-  const pauseButton = player.querySelector(".pause");
-  const currentTimeDisplay = player.querySelector(".current");
-  const totalTimeDisplay = player.querySelector(".total");
-  const progressInner = player.querySelector(".player-progress-inner");
-
-  const formatTime = (time) => {
-    let minutes = Math.floor(time / 60);
-    let seconds = Math.floor(time % 60)
-      .toString()
-      .padStart(2, "0");
-    return `${minutes}:${seconds}`;
-  };
-
-  // Met à jour la durée totale une fois l'audio chargé
-  audio.addEventListener("loadedmetadata", () => {
-    totalTimeDisplay.textContent = formatTime(audio.duration);
-  });
-
-  // Gère le bouton play
-  playButton.addEventListener("click", () => {
-    audio.play();
-    playButton.style.display = "none";
-    pauseButton.style.display = "flex";
-  });
-
-  // Gère le bouton pause
-  pauseButton.addEventListener("click", () => {
-    audio.pause();
-    playButton.style.display = "flex";
-    pauseButton.style.display = "none";
-  });
-
-  // Met à jour la progression
-  audio.addEventListener("timeupdate", () => {
-    currentTimeDisplay.textContent = formatTime(audio.currentTime);
-    let progressPercent = (audio.currentTime / audio.duration) * 100;
-    progressInner.style.width = `${progressPercent}%`;
-  });
-
-  // Permet de cliquer sur la barre pour avancer dans la chanson
-  player
-    .querySelector(".player-progress-bar")
-    .addEventListener("click", (e) => {
-      let rect = e.target.getBoundingClientRect();
-      let clickX = e.clientX - rect.left;
-      let percent = clickX / rect.width;
-      audio.currentTime = percent * audio.duration;
-    });
-}
-
 //shuffle letterrrrsss ://
 
 import shuffleLetters from "shuffle-letters";
@@ -80,7 +12,7 @@ categories.forEach((category) => {
   let canAnimate = true;
 
   category.addEventListener("mouseenter", () => {
-    if (!allowShuffle) return; // ← blocage mobile/tablette
+    if (!allowShuffle) return;
 
     if (!isAnimating && canAnimate) {
       isAnimating = true;
@@ -101,37 +33,12 @@ categories.forEach((category) => {
   });
 
   category.addEventListener("mouseleave", () => {
-    if (!allowShuffle) return; // ← inutile de gérer le reset
+    if (!allowShuffle) return;
     setTimeout(() => {
       canAnimate = true;
     }, 100);
   });
 });
-
-// const media = window.matchMedia("(min-width: 767px)");
-// const allowShuffle = () => media.matches;
-
-//agrandissement image
-
-const modal = document.getElementById("image-modal");
-const modalImg = document.getElementById("modal-img");
-
-document.querySelectorAll(".project-image").forEach((img) => {
-  img.addEventListener("click", () => {
-    modal.style.display = "block";
-    modalImg.src = img.src;
-  });
-});
-
-// closeButton.onclick = () => {
-//   modal.style.display = "none";
-// };
-
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-};
 //ANIMATION ACCUEIL
 
 //ANIMATION PERSO ACCUEIL
