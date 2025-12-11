@@ -7,3 +7,8 @@
   transform: translateY(50px) translateX(80px);
   opacity: 40%;
 }
+@media (max-width: 767px) {
+  .choose-your-project {
+    display: none;
+  }
+}

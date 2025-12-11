@@ -162,6 +162,10 @@
     width: 100%;
     transform: translateX(-100%);
   }
+  .personnage-project {
+    opacity: 0;
+    pointer-events: none;
+  }
   .navigation.is-active {
     transform: translateX(0%);
   }
