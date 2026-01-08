@@ -1,9 +1,55 @@
-<extends src="layout.html">
+<!-- <extends src="layout.html">
   <block name="content">
     <extends src="menu.html"></extends>
     <extends
       src="project.html"
       locals='{"title":"CHARLOT KOLLY", "date":"06.09.2007", "text":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.", "image":"img/accueil-mobilee.png?as=webp"}'
     ></extends>
+  </block>
+</extends> -->
+<extends src="layout.html">
+  <block name="content">
+    <extends src="menu.html"></extends>
+    <div class="project-scroll">
+      <div class="project">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-3 offset-md-4 order-2 order-md-1">
+              <div class="project-descrition">
+                <div class="project-title">
+                  <h1>CHARLOT KOLLY</h1>
+                  <div class="project-description-separator"></div>
+                </div>
+                <div class="project-date">
+                  <h2>06.09.2007</h2>
+                  <div class="project-description-separator"></div>
+                </div>
+                <div class="project-text">
+                  <p>
+                    Un peu étrange ¿?<br /><br />Mais en vrai, sympathique…<br /><br />
+                    Si tu veux un son, une vidéo, un dessin ou même un café, et
+                    que je peux y intégrer au moins un élément bizzare et
+                    texturé, n’hésite pas à m’envoyer un pigeon voyageur pour
+                    collaborer, ça serait avec grand plaisir ! :)<br /><br />Promis,
+                    je nourris le pigeon. Et parfois, je réponds aussi aux
+                    mails. ;)
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 order-1 order-md-2">
+              <img
+                src="img/accueil-mobilee.png?as=webp"
+                alt="photo du projet"
+                class="project-image"
+              />
+            </div>
+            <div id="image-modal" class="modal">
+              <img class="modal-content" id="modal-img" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </block>
 </extends>
