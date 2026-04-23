@@ -61,7 +61,49 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgress += e.deltaY / sensitivity;
       targetProgress = Math.max(0, Math.min(1, targetProgress));
     },
-    { passive: true }
+    { passive: true },
+  );
+
+  function tick() {
+    // mise à jour de progress
+    progress += (targetProgress - progress) * 0.1;
+
+    // calcule la distance réelle en pixels
+    const distancePx = (distancePercent / 100) * window.innerWidth;
+
+    // applique le mouvement
+    gsap.set(personnage, { y: distancePx * progress });
+
+    // disparition / réapparition
+    if (progress >= 0.99) personnage.style.display = "none";
+    else if (personnage.style.display === "none") personnage.style.display = "";
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const personnage = document.querySelector(".scroll-text");
+  const container = document.querySelector(".welcome");
+
+  let progress = 0;
+  let targetProgress = 0;
+
+  const distancePercent = 30; // le personnage se déplace sur 80% de la largeur de l'écran
+
+  // écoute la molette
+  container.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.target.closest(".projects-list")) return;
+
+      const sensitivity = 1300;
+      targetProgress += e.deltaY / sensitivity;
+      targetProgress = Math.max(0, Math.min(1, targetProgress));
+    },
+    { passive: true },
   );
 
   function tick() {
@@ -104,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgress += e.deltaY / sensitivity;
       targetProgress = Math.max(0, Math.min(1, targetProgress));
     },
-    { passive: true }
+    { passive: true },
   );
 
   function tick() {
@@ -148,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgress += e.deltaY / sensitivity;
       targetProgress = Math.max(0, Math.min(1, targetProgress));
     },
-    { passive: true }
+    { passive: true },
   );
 
   function tick() {
@@ -191,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgress += e.deltaY / sensitivity;
       targetProgress = Math.max(0, Math.min(1, targetProgress));
     },
-    { passive: true }
+    { passive: true },
   );
 
   function tick() {
@@ -236,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgress += e.deltaY / sensitivity;
       targetProgress = Math.max(0, Math.min(1, targetProgress));
     },
-    { passive: true }
+    { passive: true },
   );
 
   function tick() {
@@ -270,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgressLamp += e.deltaY / sensitivity;
       targetProgressLamp = Math.max(0, Math.min(1, targetProgressLamp));
     },
-    { passive: true }
+    { passive: true },
   );
 
   function tickLamp() {
@@ -309,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgressLight += e.deltaY / sensitivity;
       targetProgressLight = Math.max(0, Math.min(1, targetProgressLight));
     },
-    { passive: true }
+    { passive: true },
   );
 
   function tickLight() {
@@ -348,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
       targetProgress += e.deltaY / sensitivity;
       targetProgress = Math.max(0, Math.min(1, targetProgress));
     },
-    { passive: true }
+    { passive: true },
   );
 
   function tick() {
@@ -406,3 +448,15 @@ burger.addEventListener("click", () => {
   openIcon.classList.toggle("is-not-active");
   closeIcon.classList.toggle("is-not-active");
 });
+
+//SCROLL TEXT ACCUEIL
+
+const element = document.querySelector(".scroll-text");
+
+setInterval(() => {
+  if (element.style.opacity === "1") {
+    element.style.opacity = "0";
+  } else {
+    element.style.opacity = "1";
+  }
+}, 300); // change toutes les 500ms

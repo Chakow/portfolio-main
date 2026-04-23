@@ -16,6 +16,14 @@
     left: 0;
     top: 0;
   }
+  .scroll-text {
+    position: absolute;
+    width: 16%;
+    left: 45%;
+    top: 88%;
+    z-index: 999;
+    mix-blend-mode: color-burn;
+  }
   .home-personnage {
     will-change: transform;
     transition: none;
